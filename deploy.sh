@@ -2,7 +2,7 @@
 
 NAME="Deploy"
 DESCRIPTION="Deploys by running a git deploy and an app build."
-VERSION="0.1.0"
+VERSION="0.2.0"
 
 set -o errexit
 set -o pipefail
@@ -133,6 +133,21 @@ function showOptions()
   if [ -n "${DRY_RUN}" ]; then
     echo "Dry Run: true"
   fi
+}
+
+function processManagement()
+{
+  echo
+  echo "---------------------"
+  echo "$me: Process Management"
+  echo "---------------------"
+
+  if [ -f /var/run/deploy.pid ]; then
+      echo "Process already running."
+      kill -9 `cat /var/run/deploy.pid`
+      rm -f /var/run/deploy.pid
+  fi
+  echo `pidof $$` > /var/run/deploy.pid
 }
 
 function gitDeploy()
