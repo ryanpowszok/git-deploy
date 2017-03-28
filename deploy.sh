@@ -2,7 +2,7 @@
 
 NAME="Deploy"
 DESCRIPTION="Deploys by running a git deploy and an app build."
-VERSION="0.2.0"
+VERSION="0.2.2"
 
 set -o errexit
 set -o pipefail
