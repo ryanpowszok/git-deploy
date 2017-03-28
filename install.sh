@@ -15,4 +15,7 @@ cp "$script_dir/$deploy_script" "$install_path/$deploy_command"
 # Set execute permission
 chmod +x "$install_path/$deploy_command"
 
+# Create daemon folder
+mkdir -p /var/run/deploy
+
 echo "$deploy_script has been installed to $install_path"

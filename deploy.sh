@@ -142,12 +142,14 @@ function processManagement()
   echo "$me: Process Management"
   echo "---------------------"
 
-  if [ -f /var/run/deploy.pid ]; then
+  mkdir -p /var/run/deploy/
+
+  if [ -f /var/run/deploy/deploy.pid ]; then
       echo "Process already running."
-      kill -9 `cat /var/run/deploy.pid`
-      rm -f /var/run/deploy.pid
+      kill -9 `cat /var/run/deploy/deploy.pid`
+      rm -f /var/run/deploy/deploy.pid
   fi
-  echo `pidof $$` > /var/run/deploy.pid
+  echo `pidof $$` > /var/run/deploy/deploy.pid
 }
 
 function gitDeploy()
