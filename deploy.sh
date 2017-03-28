@@ -142,7 +142,8 @@ function processManagement()
   echo "$me: Process Management"
   echo "---------------------"
 
-  mkdir -p /var/run/deploy/
+  # Create process daemon folder
+  mkdir -p /var/run/deploy
 
   if [ -f /var/run/deploy/deploy.pid ]; then
       echo "Process already running."
