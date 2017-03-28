@@ -2,7 +2,7 @@
 
 NAME="Deploy"
 DESCRIPTION="Deploys by running a git deploy and an app build."
-VERSION="0.2.2"
+VERSION="0.2.3"
 
 set -o errexit
 set -o pipefail
@@ -135,22 +135,32 @@ function showOptions()
   fi
 }
 
-function processManagement()
+function processManagementStart()
 {
   echo
   echo "---------------------"
   echo "$me: Process Management"
   echo "---------------------"
 
+  # @see - http://unix.stackexchange.com/questions/174028/killing-a-shell-script-running-in-background
+
   # Create process daemon folder
   mkdir -p /var/run/deploy
 
   if [ -f /var/run/deploy/deploy.pid ]; then
       echo "Process already running."
-      kill -9 `cat /var/run/deploy/deploy.pid`
+      processID=$(cat /var/run/deploy/deploy.pid)
+      if ! [ -z "${processID}" ]; then
+        kill -9 ${processID}
+      fi
       rm -f /var/run/deploy/deploy.pid
   fi
   echo `pidof $$` > /var/run/deploy/deploy.pid
+}
+
+function processManagementEnd()
+{
+  rm -f /var/run/deploy/deploy.pid
 }
 
 function gitDeploy()
@@ -337,6 +347,7 @@ start
 setup
 defineVariables
 showOptions
-processManagement
+processManagementStart
 gitDeploy
+processManagementEnd
 finished
