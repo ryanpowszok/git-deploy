@@ -334,5 +334,6 @@ start
 setup
 defineVariables
 showOptions
+processManagement
 gitDeploy
 finished
