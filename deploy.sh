@@ -2,11 +2,10 @@
 
 NAME="Deploy"
 DESCRIPTION="Deploys by running a git deploy and an app build."
-VERSION="0.0.1"
+VERSION="0.1.0"
 
 set -o errexit
 set -o pipefail
-# set -o xtrace
 
 # ----------
 # Initialization
@@ -18,7 +17,6 @@ GIT_TAG=${DEPLOY_GIT_TAG}
 GIT_WORK_TREE=${DEPLOY_GIT_WORK_TREE:-}
 GIT_DIR=${DEPLOY_GIT_DIR:-}
 DEPLOY_ALLOWED_BRANCHES=("master" "develop")
-DRY_RUN=
 
 # Script Variables
 CURRENT_DIR=`pwd`
@@ -85,6 +83,12 @@ function showHelp()
   cat << EOF
 options:
   -h, --help                        Show this help.
+  -b, --git-branch
+  -t, --git-tag
+  -w, --git-work-tree
+  -d, --git-dir
+  --bare
+  --dry-run
 EOF
 }
 
@@ -109,7 +113,7 @@ function showOptions()
   # Tell user the options they've selected
   echo
   echo "---------------------"
-  echo "Options"
+  echo "$me: Options"
   echo "---------------------"
 
   # Echo if using GIT_TAG or GIT_BRANCH
@@ -135,7 +139,7 @@ function gitDeploy()
 {
   echo
   echo "---------------------"
-  echo "Git Deploy"
+  echo "$me: Git Deploy"
   echo "---------------------"
 
   # Make sure directory exists. Maybe its deployed for the first time.
@@ -267,8 +271,8 @@ function start()
 {
   echo
   echo "--------------------------------------------------"
-  echo "${NAME} v${VERSION} - ${DESCRIPTION}"
-  echo "STARTED `date`"
+  echo "$me: ${NAME} v${VERSION} - ${DESCRIPTION}"
+  echo "$me: STARTED `date`"
   echo "--------------------------------------------------"
 }
 
@@ -278,7 +282,7 @@ function finished()
 
   echo
   echo "--------------------------------------------------"
-  echo "FINISHED `date`"
+  echo "$me: FINISHED `date`"
   echo "--------------------------------------------------"
   echo
 
@@ -307,9 +311,9 @@ function contains() {
 }
 
 
-#############
-# Go #
-#############
+# ----------
+# Main
+# ----------
 parseArgs "$@"
 start
 setup
