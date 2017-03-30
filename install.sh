@@ -9,7 +9,7 @@ if [ $# -ne 0 ]; then
 fi
 script_dir=$( cd $(dirname $0); pwd -P )
 
-# Copy slacktee.sh to /usr/local/bin
+# Copy deploy script file to /usr/local/bin
 cp "$script_dir/$deploy_script" "$install_path/$deploy_command"
 
 # Set execute permission
