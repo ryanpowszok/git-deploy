@@ -1,4 +1,12 @@
-# git-deploy
+Git Deploy
+============================
+
+Helper bash script to perform a git deploy
+
+* Version: 1.0.0
+* Developer: Ryan Powszok
+* Website: [http://jukelabs.com](http://jukelabs.com)
+* Copyright: (c) 2016 Ryan Powszok / Juke Labs, Inc.
 
 License
 -------------------------------------
