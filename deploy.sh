@@ -2,7 +2,7 @@
 
 NAME="Deploy"
 DESCRIPTION="Deploys by running a git deploy and an app build."
-VERSION="0.2.3"
+VERSION="0.2.4"
 
 set -o errexit
 set -o pipefail
@@ -116,12 +116,13 @@ function showOptions()
   echo "$me: Options"
   echo "---------------------"
 
-  # Echo if using GIT_TAG or GIT_BRANCH
+  # Echo if using GIT_TAG
   if ! [ -z "${GIT_TAG}" ]; then
     echo "Tag: ${GIT_TAG}"
-  else
-    echo "Branch: ${GIT_BRANCH}"
   fi
+
+  # Echo Git Branch
+  echo "Branch: ${GIT_BRANCH}"
 
   # Echo Git Work Tree
   echo "Git Work Tree: ${GIT_WORK_TREE}"
@@ -245,10 +246,10 @@ function gitDeployFull()
     # Git Fetch
     echo
     echo "Git Deploy: Fetch"
-    echo "CMD: 'git ${GIT_ARGS[@]} fetch --depth 1 origin \"tags/${GIT_TAG}\"'"
+    echo "CMD: 'git ${GIT_ARGS[@]} fetch --depth 1 --tags origin ${GIT_BRANCH}'"
 
     if [ ! -n "${DRY_RUN}" ]; then
-      git ${GIT_ARGS[@]} fetch --depth 1 origin "tags/${GIT_TAG}"
+      git ${GIT_ARGS[@]} fetch --depth 1 --tags origin ${GIT_BRANCH}
     fi
 
     # Git Checkout
@@ -265,10 +266,10 @@ function gitDeployFull()
     # Git Fetch
     echo
     echo "Git Deploy: Fetch"
-    echo "CMD: 'git ${GIT_ARGS[@]} fetch origin ${GIT_BRANCH}'"
+    echo "CMD: 'git ${GIT_ARGS[@]} fetch --depth 1 origin ${GIT_BRANCH}'"
 
     if [ ! -n "${DRY_RUN}" ]; then
-      git ${GIT_ARGS[@]} fetch origin ${GIT_BRANCH}
+      git ${GIT_ARGS[@]} fetch --depth 1 origin ${GIT_BRANCH}
     fi
 
     # Git Checkout
