@@ -3,7 +3,7 @@ Git Deploy
 
 Helper bash script to perform a git deploy
 
-* Version: 0.2.3
+* Version: 0.2.4
 * Developer: Ryan Powszok
 * Website: [http://jukelabs.com](http://jukelabs.com)
 * Copyright: (c) 2016 Ryan Powszok / Juke Labs, Inc.
